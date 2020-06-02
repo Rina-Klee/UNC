@@ -1,8 +1,10 @@
 package ru.vsu.lab;
 
+import ru.vsu.lab.entities.IPerson;
 import ru.vsu.lab.factory.LabFactory;
 import ru.vsu.lab.repository.PersonRepository;
 
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 class Main {
