@@ -6,8 +6,8 @@ package ru.vsu.lab.entities;
 
 import ru.vsu.lab.entities.enums.Gender;
 
-import java.time.LocalDate;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.Period;
 import java.util.Objects;
 

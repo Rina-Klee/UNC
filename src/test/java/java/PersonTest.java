@@ -3,24 +3,15 @@ package test.java.java;
 import org.junit.Test;
 import ru.vsu.lab.ReadCSVWithScanner;
 import ru.vsu.lab.comparators.AgeComparator;
-import ru.vsu.lab.comparators.LastNameComparator;
 import ru.vsu.lab.entities.Division;
 import ru.vsu.lab.entities.IDivision;
-import ru.vsu.lab.entities.IPerson;
 import ru.vsu.lab.entities.Person;
 import ru.vsu.lab.entities.enums.Gender;
 import ru.vsu.lab.factory.LabFactory;
 import ru.vsu.lab.repository.IPersonRepository;
-import ru.vsu.lab.repository.IRepository;
-import ru.vsu.lab.repository.Repository;
-import ru.vsu.lab.sorters.BubbleSorter;
-import ru.vsu.lab.sorters.InsertionSorter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Arrays;
-
-import static org.junit.Assert.*;
 
 public class PersonTest {
     IDivision division = new Division("Маркетинг");

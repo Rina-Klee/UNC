@@ -2,7 +2,6 @@ package ru.vsu.lab.sorters;
 
 import ru.vsu.lab.entities.IPerson;
 import ru.vsu.lab.repository.PersonRepository;
-import ru.vsu.lab.repository.Repository;
 
 import java.util.Comparator;
 
