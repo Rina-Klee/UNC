@@ -11,7 +11,11 @@ import java.util.stream.Collectors;
 
 class Main {
     public static void main(String[] args) {
-        jaxbTask();
+
+        // Экспорт репозитория в XML и обратно.
+        //jaxbTask();
+
+        // Задание на потоки
         //streamsTask();
     }
 
