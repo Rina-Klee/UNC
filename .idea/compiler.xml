@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="10">
-      <module name="UNC" target="10" />
+      <module name="UNC" target="8" />
     </bytecodeTargetLevel>
   </component>
 </project>
