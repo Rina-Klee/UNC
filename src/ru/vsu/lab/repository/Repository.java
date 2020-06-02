@@ -7,10 +7,13 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.logging.Logger;
 
 public class Repository<T> implements IRepository<T> {
     @LabInject
     private ISorter sorter;
+
+    private static final Logger log = Logger.getLogger(Repository.class.getName());
 
     private Object[] dynamicArray;
     /**
@@ -88,6 +91,7 @@ public class Repository<T> implements IRepository<T> {
     public T get(int index) {
         for (int i = 0; i < personLenght; i++) {
             if (i == index) {
+                log.info("Getting element with index " + index);
                 return (T) dynamicArray[i];
             }
         }
@@ -106,6 +110,7 @@ public class Repository<T> implements IRepository<T> {
         }
         move(index, false);
         personLenght--;
+        log.info("Element by index " + index + " was delete.");
         return (T) o;
     }
 
@@ -119,6 +124,7 @@ public class Repository<T> implements IRepository<T> {
                 break;
             }
         }
+        log.info("Element was set to index" + index);
         return (T) o;
     }
 
@@ -133,9 +139,10 @@ public class Repository<T> implements IRepository<T> {
     }
 
     @Override
-    public List toList() {
+    public List<T> toList() {
         this.trimToSize();
-        return Arrays.asList(dynamicArray);
+        log.info("Parsing repository to List");
+        return (List<T>) Arrays.asList(dynamicArray);
     }
 
     private void trimToSize() {

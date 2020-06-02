@@ -3,13 +3,13 @@ package ru.vsu.lab.repository;
 import ru.vsu.lab.entities.IPerson;
 import ru.vsu.lab.entities.Person;
 import ru.vsu.lab.inject.LabInject;
-import ru.vsu.lab.sorters.BubbleSorter;
 import ru.vsu.lab.sorters.ISorter;
 
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.logging.Logger;
 
 
 public class PersonRepository implements IPersonRepository {
@@ -24,6 +24,8 @@ public class PersonRepository implements IPersonRepository {
      */
     private int personLenght = 0;
     private Predicate<IPerson> condition;
+
+    private static final Logger log = Logger.getLogger(PersonRepository.class.getName());
 
     public PersonRepository() {
         personDynamicArray = new IPerson[10];
@@ -60,6 +62,7 @@ public class PersonRepository implements IPersonRepository {
         }
         personDynamicArray[personLenght] = person;
         personLenght++;
+        log.info("Person was added to repository.");
     }
 
     private void move(int index) {
@@ -71,6 +74,13 @@ public class PersonRepository implements IPersonRepository {
 
     @Override
     public IPerson get(int index) {
+        try {
+            log.info("Getting Person by index " + index);
+            return personDynamicArray[index];
+        } catch (IndexOutOfBoundsException e) {
+            e.printStackTrace();
+            log.warning("There are no Person by this index!");
+        }
         return null;
     }
 
@@ -86,6 +96,7 @@ public class PersonRepository implements IPersonRepository {
         }
         move(index);
         personLenght--;
+        log.info("Person by index " + index + " was delete.");
         return person;
     }
 
@@ -99,6 +110,7 @@ public class PersonRepository implements IPersonRepository {
                 break;
             }
         }
+        log.info("Person was set to index" + index);
         return object;
     }
 
@@ -118,6 +130,7 @@ public class PersonRepository implements IPersonRepository {
     @Override
     public List<IPerson> toList() {
         trimToSize();
+        log.info("Parsing repository to List");
         return Arrays.asList(personDynamicArray);
     }
 
@@ -141,6 +154,7 @@ public class PersonRepository implements IPersonRepository {
         this.sorter.setRepository(this);
         this.sorter.setComparator(comparator);
         this.sorter.sort();
+        log.info("Repository was sorted.");
     }
 
     @Override
@@ -151,19 +165,17 @@ public class PersonRepository implements IPersonRepository {
                 repository.add(personDynamicArray[i]);
             }
         }
-        return (IPersonRepository) repository;
+        return repository;
     }
 
     @Override
     public String toString() {
-        String p = "";
+        StringBuilder p = new StringBuilder();
 
         for (int i = 0; i < personLenght; i++) {
-            p += personDynamicArray[i].toString() + "\n";
+            p.append(personDynamicArray[i].toString()).append("\n");
         }
-        return p;
+        return p.toString();
 
     }
-
-
 }

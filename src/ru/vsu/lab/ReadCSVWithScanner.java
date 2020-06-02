@@ -13,12 +13,13 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 public class ReadCSVWithScanner {
     private IPersonRepository repository;
     private String path;
+    private static final Logger log = Logger.getLogger(ReadCSVWithScanner.class.getName());
 
     public ReadCSVWithScanner(IPersonRepository repository, String path) throws IOException {
         this.repository = repository;
@@ -70,6 +71,7 @@ public class ReadCSVWithScanner {
 
         //закрываем наш ридер
         reader.close();
+        log.info("Repository was successfully loaded from file: " + path);
     }
 
 }
