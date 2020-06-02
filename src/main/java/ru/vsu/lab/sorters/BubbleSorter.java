@@ -3,8 +3,11 @@ package ru.vsu.lab.sorters;
 import ru.vsu.lab.entities.IPerson;
 import ru.vsu.lab.repository.PersonRepository;
 
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlAdapter;
 import java.util.Comparator;
 
+@XmlRootElement
 public class BubbleSorter implements ISorter {
     PersonRepository repository;
     Comparator comparator;
@@ -15,6 +18,11 @@ public class BubbleSorter implements ISorter {
     }
 
     public BubbleSorter() {
+    }
+
+    public static class Adapter extends XmlAdapter<BubbleSorter,ISorter> {
+        public ISorter unmarshal(BubbleSorter s) { return s; }
+        public BubbleSorter marshal(ISorter s) { return (BubbleSorter) s; }
     }
 
     @Override

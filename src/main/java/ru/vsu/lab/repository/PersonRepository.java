@@ -3,27 +3,37 @@ package ru.vsu.lab.repository;
 import ru.vsu.lab.entities.IPerson;
 import ru.vsu.lab.entities.Person;
 import ru.vsu.lab.inject.LabInject;
+import ru.vsu.lab.sorters.BubbleSorter;
 import ru.vsu.lab.sorters.ISorter;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
-
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class PersonRepository implements IPersonRepository {
 
     @LabInject
+    @XmlElement
+    @XmlJavaTypeAdapter(BubbleSorter.Adapter.class)
     private ISorter sorter;
 
+    @XmlElement(name = "person")
+    @XmlJavaTypeAdapter(Person.Adapter.class)
     private IPerson[] personDynamicArray;
     /**
      * .
      * number of items in the database.
      */
     private int personLenght = 0;
-    private Predicate<IPerson> condition;
 
     private static final Logger log = Logger.getLogger(PersonRepository.class.getName());
 

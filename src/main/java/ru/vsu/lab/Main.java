@@ -2,6 +2,8 @@ package ru.vsu.lab;
 
 import ru.vsu.lab.entities.IPerson;
 import ru.vsu.lab.factory.LabFactory;
+import ru.vsu.lab.jaxb.PersonRepositoryToXML;
+import ru.vsu.lab.jaxb.XMLToPersonRepository;
 import ru.vsu.lab.repository.PersonRepository;
 
 import java.util.Objects;
@@ -9,7 +11,24 @@ import java.util.stream.Collectors;
 
 class Main {
     public static void main(String[] args) {
-        streamsTask();
+        jaxbTask();
+        //streamsTask();
+    }
+
+    private static void jaxbTask() {
+        try {
+            LabFactory factory = new LabFactory();
+            ReadCSVWithScanner loader = new ReadCSVWithScanner(factory.createPersonRepository(), "src/main/resources/persons.csv");
+
+            PersonRepositoryToXML.toXML(loader.getRepository(), "src/main/resources/repository.xml");
+
+            // Вывод в консоль всех людей из XML файла.
+            for (IPerson person : Objects.requireNonNull(XMLToPersonRepository.toPersonRepository("src/main/resources/repository.xml")).toList()) {
+                System.out.println(person.toString());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private static void streamsTask() {

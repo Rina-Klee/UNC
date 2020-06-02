@@ -1,11 +1,13 @@
 package ru.vsu.lab.entities;
 
-//import org.joda.time.DateTime;
-//import org.joda.time.LocalDate;
-//import org.joda.time.Years;
-
 import ru.vsu.lab.entities.enums.Gender;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlAdapter;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.Period;
@@ -14,6 +16,8 @@ import java.util.Objects;
 /**
  * a class that stores parameters about a user.
  */
+@XmlRootElement(name = "person")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Person implements IPerson {
 
     /**
@@ -34,6 +38,7 @@ public class Person implements IPerson {
     /**
      * this variable stores the date of birth.
      */
+    @XmlJavaTypeAdapter(DateAdapter.class)
     private LocalDate birthdate;
 
     /**
@@ -44,6 +49,8 @@ public class Person implements IPerson {
     /**
      * this variable stores the division.
      */
+    @XmlElement
+    @XmlJavaTypeAdapter(Division.Adapter.class)
     private IDivision division;
 
     /**
@@ -70,6 +77,16 @@ public class Person implements IPerson {
     }
 
     public Person() {
+    }
+
+    public static class Adapter extends XmlAdapter<Person,IPerson> {
+        public IPerson unmarshal(Person v) { return v; }
+        public Person marshal(IPerson v) { return (Person) v; }
+    }
+
+    public static class DateAdapter extends XmlAdapter<String,LocalDate> {
+        public LocalDate unmarshal(String v) { return LocalDate.parse(v); }
+        public String marshal(LocalDate v) { return v.toString(); }
     }
 
     @Override
