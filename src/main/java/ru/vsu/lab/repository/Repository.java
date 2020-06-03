@@ -1,20 +1,36 @@
 package ru.vsu.lab.repository;
 
+import ru.vsu.lab.entities.IPerson;
+import ru.vsu.lab.entities.Person;
 import ru.vsu.lab.inject.LabInject;
+import ru.vsu.lab.sorters.BubbleSorter;
 import ru.vsu.lab.sorters.ISorter;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlAdapter;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlJavaTypeAdapter(Repository.Adapter.class)
 public class Repository<T> implements IRepository<T> {
+
     @LabInject
+    @XmlElement
+    @XmlJavaTypeAdapter(BubbleSorter.Adapter.class)
     private ISorter sorter;
 
     private static final Logger log = Logger.getLogger(Repository.class.getName());
 
+    @XmlElement(name = "dynamicArray")
     private Object[] dynamicArray;
     /**
      * .
@@ -24,6 +40,11 @@ public class Repository<T> implements IRepository<T> {
 
     public Repository() {
         dynamicArray = new Object[10];
+    }
+
+    public static class Adapter extends XmlAdapter<Repository, IRepository> {
+        public IRepository unmarshal(Repository r) { return r; }
+        public Repository marshal(IRepository r) { return (Repository) r; }
     }
 
     private void increase() {

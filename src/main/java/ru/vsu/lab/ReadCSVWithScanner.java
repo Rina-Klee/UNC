@@ -1,9 +1,11 @@
 package ru.vsu.lab;
 
 import ru.vsu.lab.entities.Division;
+import ru.vsu.lab.entities.IPerson;
 import ru.vsu.lab.entities.Person;
 import ru.vsu.lab.entities.enums.Gender;
 import ru.vsu.lab.repository.IPersonRepository;
+import ru.vsu.lab.repository.IRepository;
 import ru.vsu.lab.repository.PersonRepository;
 
 import java.io.BufferedReader;
@@ -17,17 +19,17 @@ import java.util.Scanner;
 import java.util.logging.Logger;
 
 public class ReadCSVWithScanner {
-    private IPersonRepository repository;
+    private IRepository<IPerson> repository;
     private String path;
     private static final Logger log = Logger.getLogger(ReadCSVWithScanner.class.getName());
 
-    public ReadCSVWithScanner(IPersonRepository repository, String path) throws IOException {
+    public ReadCSVWithScanner(IRepository<IPerson> repository, String path) throws IOException {
         this.repository = repository;
         this.path = path;
-        load((PersonRepository) repository);
+        load(repository);
     }
 
-    public IPersonRepository getRepository() {
+    public IRepository<IPerson> getRepository() {
         return repository;
     }
 
@@ -37,7 +39,7 @@ public class ReadCSVWithScanner {
         return divMap.containsKey(name);
     }
 
-    public void load(PersonRepository repository) throws IOException {
+    public void load(IRepository<IPerson> repository) throws IOException {
 
         // открываем файл
         BufferedReader reader = new BufferedReader(new FileReader(

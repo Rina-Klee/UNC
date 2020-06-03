@@ -1,7 +1,10 @@
 package ru.vsu.lab.jaxb;
 
+import ru.vsu.lab.entities.Person;
 import ru.vsu.lab.repository.IPersonRepository;
+import ru.vsu.lab.repository.IRepository;
 import ru.vsu.lab.repository.PersonRepository;
+import ru.vsu.lab.repository.Repository;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -18,12 +21,12 @@ public class XMLToPersonRepository {
      * Основной метод для экспортирования.
      * @param xml_path путь до xml файла.
      */
-    public static IPersonRepository toPersonRepository (String xml_path) {
+    public static IRepository toPersonRepository (String xml_path) {
         try {
-            JAXBContext context = JAXBContext.newInstance(PersonRepository.class);
+            JAXBContext context = JAXBContext.newInstance(Repository.class, Person.class);
             Unmarshaller unmarshaller = context.createUnmarshaller();
 
-            return (IPersonRepository) unmarshaller.unmarshal(new FileReader(xml_path));
+            return (IRepository) unmarshaller.unmarshal(new FileReader(xml_path));
         } catch (JAXBException | FileNotFoundException e) {
             e.printStackTrace();
         }

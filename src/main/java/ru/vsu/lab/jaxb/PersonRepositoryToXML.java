@@ -1,7 +1,10 @@
 package ru.vsu.lab.jaxb;
 
+import ru.vsu.lab.entities.Person;
 import ru.vsu.lab.repository.IPersonRepository;
+import ru.vsu.lab.repository.IRepository;
 import ru.vsu.lab.repository.PersonRepository;
+import ru.vsu.lab.repository.Repository;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -18,9 +21,9 @@ public class PersonRepositoryToXML {
      * @param repository репозиторий.
      * @param xml_path путь xml файла.
      */
-    public static void toXML(IPersonRepository repository, String xml_path) {
+    public static void toXML(IRepository repository, String xml_path) {
         try {
-            JAXBContext context = JAXBContext.newInstance(PersonRepository.class);
+            JAXBContext context = JAXBContext.newInstance(Repository.class, Person.class);
             Marshaller marshaller = context.createMarshaller();
             marshaller.setProperty(marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
 

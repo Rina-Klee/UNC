@@ -13,7 +13,7 @@ class Main {
     public static void main(String[] args) {
 
         // Экспорт репозитория в XML и обратно.
-        //jaxbTask();
+        jaxbTask();
 
         // Задание на потоки
         //streamsTask();
@@ -22,12 +22,12 @@ class Main {
     private static void jaxbTask() {
         try {
             LabFactory factory = new LabFactory();
-            ReadCSVWithScanner loader = new ReadCSVWithScanner(factory.createPersonRepository(), "src/main/resources/persons.csv");
+            ReadCSVWithScanner loader = new ReadCSVWithScanner(factory.createRepository(IPerson.class), "src/main/resources/persons.csv");
 
             PersonRepositoryToXML.toXML(loader.getRepository(), "src/main/resources/repository.xml");
 
             // Вывод в консоль всех людей из XML файла.
-            for (IPerson person : Objects.requireNonNull(XMLToPersonRepository.toPersonRepository("src/main/resources/repository.xml")).toList()) {
+            for (Object person : Objects.requireNonNull(XMLToPersonRepository.toPersonRepository("src/main/resources/repository.xml")).toList()) {
                 System.out.println(person.toString());
             }
         } catch (Exception e) {
