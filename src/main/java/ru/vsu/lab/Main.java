@@ -5,18 +5,38 @@ import ru.vsu.lab.factory.LabFactory;
 import ru.vsu.lab.jaxb.PersonRepositoryToXML;
 import ru.vsu.lab.jaxb.XMLToPersonRepository;
 import ru.vsu.lab.repository.PersonRepository;
+import ru.vsu.lab.soap.WebClient;
+import ru.vsu.lab.soap.WebPublisher;
 
+import java.io.IOException;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
 class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+
+        /* Раскомментируйте нужную строку. */
+
+        // Веб сервер с двумя запросами.
+        //soap();
 
         // Экспорт репозитория в XML и обратно.
-        jaxbTask();
+        //jaxbTask();
 
-        // Задание на потоки
+        // Задание на потоки.
         //streamsTask();
+    }
+
+    private static void soap() throws IOException {
+        WebPublisher.start("http://localhost:8080/wss/persons");
+        WebClient.start("http://localhost:8080/wss/persons?wsdl",
+                "http://impl.service.lab.vsu.ru/",
+                "ServiceImplService");
+
+        System.out.println("Количество людей заданного возраста (21):");
+        System.out.println(WebClient.getCountUsersByAge(21));
+        System.out.println("Имя человека с заданным номером (4):");
+        System.out.println(WebClient.getUserById(4));
     }
 
     private static void jaxbTask() {
