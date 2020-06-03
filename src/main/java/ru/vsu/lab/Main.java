@@ -17,7 +17,7 @@ class Main {
 
         /* Раскомментируйте нужную строку. */
 
-        // Веб сервер с двумя запросами.
+        // Веб-сервер с двумя запросами.
         //soap();
 
         // Экспорт репозитория в XML и обратно.
@@ -33,10 +33,8 @@ class Main {
                 "http://impl.service.lab.vsu.ru/",
                 "ServiceImplService");
 
-        System.out.println("Количество людей заданного возраста (21):");
-        System.out.println(WebClient.getCountUsersByAge(21));
-        System.out.println("Имя человека с заданным номером (4):");
-        System.out.println(WebClient.getUserById(4));
+        System.out.println("Количество людей заданного возраста (21): " + WebClient.getCountUsersByAge(21));
+        System.out.println("Имя человека с заданным номером (4): " + WebClient.getUserById(4));
     }
 
     private static void jaxbTask() {
@@ -46,7 +44,7 @@ class Main {
 
             PersonRepositoryToXML.toXML(loader.getRepository(), "src/main/resources/repository.xml");
 
-            // Вывод в консоль всех людей из XML файла.
+            // Вывод в консоль всех людей из XML файла
             for (Object person : Objects.requireNonNull(XMLToPersonRepository.toPersonRepository("src/main/resources/repository.xml")).toList()) {
                 System.out.println(person.toString());
             }
@@ -66,7 +64,7 @@ class Main {
             repository.toList().stream().filter(p -> p.getFirstName().toLowerCase().contains("a")).filter(p -> p.getAge() > 30).filter(p -> p.getSalary().intValue() < 5000).forEach(System.out::println);
             System.out.println("\n3) Список людей с двумя буквами 'а' в имени подряд.");
             repository.toList().stream().filter(p -> p.getFirstName().toLowerCase().contains("aa")).forEach(System.out::println);
-            System.out.println("\n4) Колическтво людей по датам рождения.");
+            System.out.println("\n4) Количество людей по датам рождения.");
             System.out.println(repository.toList().stream().collect(Collectors.groupingBy(p -> p.getBirthdate().getYear(), Collectors.counting())));
         } catch (Exception e) {
             e.printStackTrace();
